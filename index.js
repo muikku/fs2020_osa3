@@ -56,6 +56,16 @@ app.post(`/api/persons`, (req, res) => {
             error: 'name missing'
         })
     }
+    if(!body.number){
+        return res.status(400).json({
+            error: 'number missing'
+        })
+    } 
+    if(persons.map(e => e.name).includes(body.name)){
+        return res.status(400).json({
+            error: 'name must be unique'
+        })
+    }
 
     const rndm9001 = () => Math.floor(Math.random() * Math.floor(9001))
     while(true){

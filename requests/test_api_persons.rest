@@ -12,3 +12,19 @@ Content-Type: application/json
     "name": "Pekka Lipponen",
     "number": "unknown"
 }
+
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Pekka Lipponen"
+}
+
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "number": "0234899"
+}
