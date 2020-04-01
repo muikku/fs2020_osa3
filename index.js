@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+app.use(express.json())
 
 let persons = [
     {
@@ -46,6 +47,30 @@ app.delete(`/api/persons/:id`, (req, res) => {
         res.status(204).end()
     } 
     res.status(404).end()
+})
+
+app.post(`/api/persons`, (req, res) => {
+    const body = req.body
+    if(!body.name){
+        return res.status(400).json({
+            error: 'name missing'
+        })
+    }
+
+    const rndm9001 = () => Math.floor(Math.random() * Math.floor(9001))
+    while(true){
+        const id = rndm9001()
+        if(!persons.map(p => p.id).includes(id)){
+            const person = {
+                name: body.name,
+                number: body.number,
+                id: id
+            }
+            persons = persons.concat(person)
+            res.json(person)
+            break;
+        }
+    }
 })
 
 app.get(`/info`, (req, res) => {
