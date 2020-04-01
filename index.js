@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-let notes = [
+let persons = [
     {
       id: 1,
       name: "HTML is easy",
@@ -26,12 +26,21 @@ app.get('/', (req, res) => {
 })
 
 app.get(`/api/persons`, (req, res) => {
-    
-    res.json(notes)
+    res.json(persons)
+})
+
+app.get(`/api/persons/:id`, (req, res) => {
+    const id = Number(req.params.id)
+    const contact = persons.find(p => p.id === id)
+    if(contact){
+        res.json(contact)
+    } else {
+        res.status(404).end()
+    }
 })
 
 app.get(`/info`, (req, res) => {
-    const infoNow = `Phonebook has info for ${notes.length} people \n\n${new Date}`
+    const infoNow = `Phonebook has info for ${persons.length} people \n\n${new Date}`
     res.end(infoNow)
 })
 
