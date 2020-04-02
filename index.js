@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const cors = require('cors')
+
+app.use(express.static('build'))
+app.use(cors())
 app.use(express.json())
-
 morgan.token('message-body', (req, res) => JSON.stringify(req.body, res.body))
-
 app.use(morgan(':method :url :status :message-body :response-time ms'))
 
 let persons = [
@@ -49,7 +51,7 @@ app.delete(`/api/persons/:id`, (req, res) => {
     const id = Number(req.params.id)
     if(persons.map(p => p.id).includes(id)){
         persons = persons.filter(p => p.id !== id)
-        res.status(404).end()
+        res.status(204).end()
     } 
     res.status(404).end()
 })
@@ -95,6 +97,6 @@ app.get(`/info`, (req, res) => {
     res.end(infoNow)
 })
 
-const port = 3001
+const port = process.env.PORT || 3001
 app.listen(port)
 console.log(`server running on port ${port}`)
