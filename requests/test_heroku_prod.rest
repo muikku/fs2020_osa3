@@ -1,0 +1,32 @@
+
+
+DELETE https://muikku-phonebook-fs2020.herokuapp.com/api/persons/2
+
+###
+
+DELETE https://muikku-phonebook-fs2020.herokuapp.com/api/persons/7
+
+###
+POST https://muikku-phonebook-fs2020.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "name": "Pekka Lipponen",
+    "number": "unknown"
+}
+
+###
+POST https://muikku-phonebook-fs2020.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "name": "Pekka Lipponen"
+}
+
+###
+POST https://muikku-phonebook-fs2020.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "number": "0234899"
+}
