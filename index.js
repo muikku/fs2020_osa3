@@ -1,6 +1,11 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 app.use(express.json())
+
+morgan.token('message-body', (req, res) => JSON.stringify(req.body, res.body))
+
+app.use(morgan(':method :url :status :message-body :response-time ms'))
 
 let persons = [
     {
@@ -44,7 +49,7 @@ app.delete(`/api/persons/:id`, (req, res) => {
     const id = Number(req.params.id)
     if(persons.map(p => p.id).includes(id)){
         persons = persons.filter(p => p.id !== id)
-        res.status(204).end()
+        res.status(404).end()
     } 
     res.status(404).end()
 })
@@ -68,6 +73,7 @@ app.post(`/api/persons`, (req, res) => {
     }
 
     const rndm9001 = () => Math.floor(Math.random() * Math.floor(9001))
+    
     while(true){
         const id = rndm9001()
         if(!persons.map(p => p.id).includes(id)){
@@ -80,6 +86,7 @@ app.post(`/api/persons`, (req, res) => {
             res.json(person)
             break;
         }
+        ///yeah if someone has over 9000 contacts, this loop will run forever...
     }
 })
 
