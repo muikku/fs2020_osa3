@@ -26,8 +26,8 @@ app.get(`/api/persons`, (req, res, next) => {
 })
 
 app.get(`/api/persons/:id`, (req, res, next) => {
-    const id = Number(req.params.id)
-    Person.findById(id).then(person => {
+    Person.findById(req.params.id)
+    .then(person => {
         if(person){
             res.json(person.toJSON())
         } else {
@@ -91,9 +91,13 @@ app.post(`/api/persons`, (req, res, next) => {
 })
 
 ///korjattava
-app.get(`/info`, (req, res) => {
-    const infoNow = `Phonebook has info for ${persons.length} people \n\n${new Date}`
-    res.end(infoNow)
+app.get(`/info`, (req, res, next) => {
+    Person.find({}).then(ppl => {
+        const infoNow = `Phonebook has info for ${ppl.length} people \n\n${new Date}`
+        res.end(infoNow)
+    })
+    
+    .catch(error => next(error))
 })
 
 const unknownEndpoint = (req,res) => {

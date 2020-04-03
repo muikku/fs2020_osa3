@@ -1,3 +1,4 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 ///to get rid of deprecation warning
 mongoose.set('useFindAndModify', false)
