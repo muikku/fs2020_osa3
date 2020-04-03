@@ -77,22 +77,16 @@ app.post(`/api/persons`, (req, res) => {
         })
     }
 
-    const rndm9001 = () => Math.floor(Math.random() * Math.floor(9001))
+    const person = new Person({
+        name: body.name,
+        number: body.number
+    })
+
+    person.save().then(savedPerson => {
+        res.json(savedPerson.toJSON())
+    })
+
     
-    while(true){
-        const id = rndm9001()
-        if(!persons.map(p => p.id).includes(id)){
-            const person = {
-                name: body.name,
-                number: body.number,
-                id: id
-            }
-            persons = persons.concat(person)
-            res.json(person)
-            break;
-        }
-        ///yeah if someone has over 9000 contacts, this loop will run forever...
-    }
 })
 
 app.get(`/info`, (req, res) => {
