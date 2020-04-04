@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const uniqueV = require('mongoose-unique-validator')
 ///to get rid of deprecation warning
 mongoose.set('useFindAndModify', false)
 
@@ -16,9 +17,10 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   })
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: Number
+  name: { type: String, required: true, unique: true },
+  number: { type: Number }
 })
+personSchema.plugin(uniqueV)
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {
