@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const uniqueV = require('mongoose-unique-validator')
 ///to get rid of deprecation warning
 mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true)
 
 // eslint-disable-next-line no-undef
 const url = process.env.MONGODB_URI
